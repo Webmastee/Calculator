@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webflow Product Image Glow Effect - Starforge Style</title>
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0a101d 0%, #181e2a 100%);
+            color: #fff;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #bdf9a1, #8f68ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .demo-section {
+            margin-bottom: 4rem;
+        }
+
+        .demo-section h2 {
+            margin-bottom: 1.5rem;
+            color: #bdf9a1;
+            font-size: 1.5rem;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .product-card {
+            background: rgba(24, 30, 42, 0.8);
+            border: 1px solid rgba(48, 53, 66, 0.5);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .product-card:hover {
+            border-color: rgba(189, 249, 161, 0.5);
+            background: rgba(24, 30, 42, 0.9);
+        }
+
+        .product-image-container {
+            position: relative;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 200px;
+        }
+
+        /* ===== GLOW EFFECT IMPLEMENTATION ===== */
+        
+        /* Base glow class - this is the main implementation */
+        .glow {
+            /* Default glow values */
+            --diffuse: 4rem;
+            --rise: 0rem;
+            --glow: rgba(255, 255, 255, 0.8);
+            --hover-glow: white;
+            --dim: 1;
+            
+            /* Apply the drop-shadow filter for the glow effect */
+            -webkit-filter: drop-shadow(0 calc(var(--rise, 0) * var(--dim, 1)) calc(var(--diffuse, 4rem) * 0.75 * var(--dim, 1)) var(--glow, rgba(255, 255, 255, 0.8)));
+            filter: drop-shadow(0 calc(var(--rise, 0) * var(--dim, 1)) calc(var(--diffuse, 4rem) * 0.75 * var(--dim, 1)) var(--glow, rgba(255, 255, 255, 0.8)));
+            
+            /* Smooth transition for the glow effect */
+            -webkit-transition: -webkit-filter 0.3s linear;
+            transition: filter 1s cubic-bezier(0.4, 0, 0.2, 1);
+            
+            /* Optimize for GPU acceleration */
+            will-change: filter;
+            transform: translateZ(0);
+        }
+
+        /* Hover state - intensifies the glow */
+        .glow:hover {
+            -webkit-filter: drop-shadow(0 calc(var(--rise, 0) * var(--dim, 1)) calc(var(--diffuse, 4rem) * var(--dim, 1)) var(--hover-glow, white));
+            filter: drop-shadow(0 calc(var(--rise, 0) * var(--dim, 1)) calc(var(--diffuse, 4rem) * var(--dim, 1)) var(--hover-glow, white));
+            transition: filter 0.3s cubic-bezier(0.8, 0, 0.6, 1);
+        }
+
+        /* Alternative glow styles for different effects */
+        .glow-cyan {
+            --glow: rgba(0, 181, 255, 0.51);
+            --hover-glow: rgba(0, 181, 255, 0.76);
+        }
+
+        .glow-green {
+            --glow: rgba(0, 255, 102, 0.47);
+            --hover-glow: rgba(0, 255, 102, 0.72);
+        }
+
+        .glow-purple {
+            --glow: rgba(166, 0, 255, 0.58);
+            --hover-glow: rgba(166, 0, 255, 0.83);
+        }
+
+        .glow-red {
+            --glow: rgba(214, 62, 73, 0.54);
+            --hover-glow: rgba(214, 62, 73, 0.79);
+        }
+
+        .glow-pink {
+            --glow: rgba(254, 177, 255, 0.41);
+            --hover-glow: rgba(254, 177, 255, 0.66);
+        }
+
+        .glow-orange {
+            --glow: rgba(255, 135, 45, 0.48);
+            --hover-glow: rgba(255, 135, 45, 0.73);
+        }
+
+        /* Neon effect variations */
+        .neon {
+            -webkit-filter: drop-shadow(0 0 var(--diffuse, 0.5rem) var(--glow, white)) drop-shadow(0 0 0 var(--glow, white));
+            filter: drop-shadow(0 0 var(--diffuse, 0.5rem) var(--glow, white)) drop-shadow(0 0 0 var(--glow, white));
+            transition: filter 0.1s linear;
+        }
+
+        .neon:hover {
+            -webkit-filter: drop-shadow(0 0 calc(var(--diffuse, 0.5rem) * 1.5) var(--hover-glow, white)) drop-shadow(0 0 var(--diffuse, 0.5rem) var(--glow, white));
+            filter: drop-shadow(0 0 calc(var(--diffuse, 0.5rem) * 1.5) var(--hover-glow, white)) drop-shadow(0 0 var(--diffuse, 0.5rem) var(--glow, white));
+        }
+
+        /* Glare effect - multiple drop shadows */
+        .glare {
+            -webkit-filter: drop-shadow(0 calc(var(--rise, 0) * var(--dim, 1)) calc(var(--diffuse, 4rem) * 0.75 * var(--dim, 1)) var(--glow, rgba(255, 255, 255, 0.8))) drop-shadow(0 calc(var(--rise, 0) * var(--dim, 1)) calc(var(--diffuse, 4rem) * 0.5 * var(--dim, 1)) var(--glow, rgba(255, 255, 255, 0.8)));
+            filter: drop-shadow(0 calc(var(--rise, 0) * var(--dim, 1)) calc(var(--diffuse, 4rem) * 0.75 * var(--dim, 1)) var(--glow, rgba(255, 255, 255, 0.8))) drop-shadow(0 calc(var(--rise, 0) * var(--dim, 1)) calc(var(--diffuse, 4rem) * 0.5 * var(--dim, 1)) var(--glow, rgba(255, 255, 255, 0.8)));
+            transition: filter 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .glare:hover {
+            -webkit-filter: drop-shadow(0 calc(var(--rise, 0) * var(--dim, 1)) calc(var(--diffuse, 4rem) * var(--dim, 1)) var(--hover-glow, white)) drop-shadow(0 calc(var(--rise, 0) * var(--dim, 1)) calc(var(--diffuse, 4rem) * 0.75 * var(--dim, 1)) var(--hover-glow, white));
+            filter: drop-shadow(0 calc(var(--rise, 0) * var(--dim, 1)) calc(var(--diffuse, 4rem) * var(--dim, 1)) var(--hover-glow, white)) drop-shadow(0 calc(var(--rise, 0) * var(--dim, 1)) calc(var(--diffuse, 4rem) * 0.75 * var(--dim, 1)) var(--hover-glow, white));
+            transition: filter 0.3s cubic-bezier(0.8, 0, 0.6, 1);
+        }
+
+        /* Product image styling */
+        .product-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .product-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #fff;
+        }
+
+        .product-description {
+            color: #ccc;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        /* Webflow-specific implementation guide */
+        .implementation-guide {
+            background: rgba(24, 30, 42, 0.9);
+            border: 1px solid rgba(189, 249, 161, 0.3);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        .implementation-guide h3 {
+            color: #bdf9a1;
+            margin-bottom: 1rem;
+        }
+
+        .code-block {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+        }
+
+        .code-block pre {
+            margin: 0;
+            color: #bdf9a1;
+        }
+
+        .color-palette {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .color-swatch {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .color-preview {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Webflow Product Image Glow Effect</h1>
+        <p style="text-align: center; margin-bottom: 3rem; color: #ccc;">
+            Replicating the Starforge Systems glowing effect for Webflow product images
+        </p>
+
+        <!-- Demo Section -->
+        <div class="demo-section">
+            <h2>Glow Effect Examples</h2>
+            <div class="product-grid">
+                <!-- Cyan Glow -->
+                <div class="product-card">
+                    <div class="product-image-container">
+                        <img src="https://via.placeholder.com/300x200/00b5ff/ffffff?text=Product+1" 
+                             alt="Product 1" 
+                             class="product-image glow glow-cyan"
+                             style="--diffuse: 4rem; --rise: 0rem; --glow: rgba(0, 181, 255, 0.51); --hover-glow: rgba(0, 181, 255, 0.76);">
+                    </div>
+                    <h3 class="product-title">Cyan Glow Effect</h3>
+                    <p class="product-description">Classic Starforge cyan glow with hover intensification.</p>
+                </div>
+
+                <!-- Green Glow -->
+                <div class="product-card">
+                    <div class="product-image-container">
+                        <img src="https://via.placeholder.com/300x200/00ff66/ffffff?text=Product+2" 
+                             alt="Product 2" 
+                             class="product-image glow glow-green"
+                             style="--diffuse: 4rem; --rise: 0rem; --glow: rgba(0, 255, 102, 0.47); --hover-glow: rgba(0, 255, 102, 0.72);">
+                    </div>
+                    <h3 class="product-title">Green Glow Effect</h3>
+                    <p class="product-description">Vibrant green glow matching Starforge's signature color.</p>
+                </div>
+
+                <!-- Purple Glow -->
+                <div class="product-card">
+                    <div class="product-image-container">
+                        <img src="https://via.placeholder.com/300x200/a600ff/ffffff?text=Product+3" 
+                             alt="Product 3" 
+                             class="product-image glow glow-purple"
+                             style="--diffuse: 4rem; --rise: 0rem; --glow: rgba(166, 0, 255, 0.58); --hover-glow: rgba(166, 0, 255, 0.83);">
+                    </div>
+                    <h3 class="product-title">Purple Glow Effect</h3>
+                    <p class="product-description">Deep purple glow for premium product positioning.</p>
+                </div>
+
+                <!-- Red Glow -->
+                <div class="product-card">
+                    <div class="product-image-container">
+                        <img src="https://via.placeholder.com/300x200/d63e49/ffffff?text=Product+4" 
+                             alt="Product 4" 
+                             class="product-image glow glow-red"
+                             style="--diffuse: 4rem; --rise: 0rem; --glow: rgba(214, 62, 73, 0.54); --hover-glow: rgba(214, 62, 73, 0.79);">
+                    </div>
+                    <h3 class="product-title">Red Glow Effect</h3>
+                    <p class="product-description">Bold red glow for high-performance products.</p>
+                </div>
+
+                <!-- Pink Glow -->
+                <div class="product-card">
+                    <div class="product-image-container">
+                        <img src="https://via.placeholder.com/300x200/feb1ff/ffffff?text=Product+5" 
+                             alt="Product 5" 
+                             class="product-image glow glow-pink"
+                             style="--diffuse: 1rem; --rise: 0rem; --glow: rgba(254, 177, 255, 0.41); --hover-glow: rgba(254, 177, 255, 0.66);">
+                    </div>
+                    <h3 class="product-title">Pink Glow Effect</h3>
+                    <p class="product-description">Soft pink glow for aesthetic products.</p>
+                </div>
+
+                <!-- Orange Glow -->
+                <div class="product-card">
+                    <div class="product-image-container">
+                        <img src="https://via.placeholder.com/300x200/ff872d/ffffff?text=Product+6" 
+                             alt="Product 6" 
+                             class="product-image glow glow-orange"
+                             style="--diffuse: 2rem; --rise: -1.5rem; --glow: rgba(255, 135, 45, 0.48); --hover-glow: rgba(255, 135, 45, 0.73);">
+                    </div>
+                    <h3 class="product-title">Orange Glow Effect</h3>
+                    <p class="product-description">Warm orange glow with custom positioning.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Implementation Guide -->
+        <div class="implementation-guide">
+            <h3>Webflow Implementation Guide</h3>
+            
+            <h4>1. Add Custom CSS to Webflow</h4>
+            <p>In your Webflow project, go to <strong>Project Settings > Custom Code > Head Code</strong> and add this CSS:</p>
+            
+            <div class="code-block">
+                <pre>&lt;style&gt;
+/* Starforge-style glow effect for product images */
+.glow {
+    --diffuse: 4rem;
+    --rise: 0rem;
+    --glow: rgba(255, 255, 255, 0.8);
+    --hover-glow: white;
+    --dim: 1;
+    
+    -webkit-filter: drop-shadow(0 calc(var(--rise, 0) * var(--dim, 1)) calc(var(--diffuse, 4rem) * 0.75 * var(--dim, 1)) var(--glow, rgba(255, 255, 255, 0.8)));
+    filter: drop-shadow(0 calc(var(--rise, 0) * var(--dim, 1)) calc(var(--diffuse, 4rem) * 0.75 * var(--dim, 1)) var(--glow, rgba(255, 255, 255, 0.8)));
+    
+    -webkit-transition: -webkit-filter 0.3s linear;
+    transition: filter 1s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    will-change: filter;
+    transform: translateZ(0);
+}
+
+.glow:hover {
+    -webkit-filter: drop-shadow(0 calc(var(--rise, 0) * var(--dim, 1)) calc(var(--diffuse, 4rem) * var(--dim, 1)) var(--hover-glow, white));
+    filter: drop-shadow(0 calc(var(--rise, 0) * var(--dim, 1)) calc(var(--diffuse, 4rem) * var(--dim, 1)) var(--hover-glow, white));
+    transition: filter 0.3s cubic-bezier(0.8, 0, 0.6, 1);
+}
+
+/* Color variations */
+.glow-cyan {
+    --glow: rgba(0, 181, 255, 0.51);
+    --hover-glow: rgba(0, 181, 255, 0.76);
+}
+
+.glow-green {
+    --glow: rgba(0, 255, 102, 0.47);
+    --hover-glow: rgba(0, 255, 102, 0.72);
+}
+
+.glow-purple {
+    --glow: rgba(166, 0, 255, 0.58);
+    --hover-glow: rgba(166, 0, 255, 0.83);
+}
+
+.glow-red {
+    --glow: rgba(214, 62, 73, 0.54);
+    --hover-glow: rgba(214, 62, 73, 0.79);
+}
+
+.glow-pink {
+    --glow: rgba(254, 177, 255, 0.41);
+    --hover-glow: rgba(254, 177, 255, 0.66);
+}
+
+.glow-orange {
+    --glow: rgba(255, 135, 45, 0.48);
+    --hover-glow: rgba(255, 135, 45, 0.73);
+}
+&lt;/style&gt;</pre>
+            </div>
+
+            <h4>2. Apply Classes to Product Images</h4>
+            <p>For each product image in Webflow:</p>
+            <ol>
+                <li>Select the product image</li>
+                <li>In the <strong>Element Settings</strong> panel, go to <strong>Classes</strong></li>
+                <li>Add the base class: <code>glow</code></li>
+                <li>Add a color variation class (e.g., <code>glow-cyan</code>, <code>glow-green</code>, etc.)</li>
+            </ol>
+
+            <h4>3. Custom Inline Styles (Optional)</h4>
+            <p>For more precise control, you can add inline styles to individual images:</p>
+            <div class="code-block">
+                <pre>style="--diffuse: 4rem; --rise: 0rem; --glow: rgba(0, 181, 255, 0.51); --hover-glow: rgba(0, 181, 255, 0.76);"</pre>
+            </div>
+
+            <h4>4. Color Palette Reference</h4>
+            <div class="color-palette">
+                <div class="color-swatch">
+                    <div class="color-preview" style="background: rgba(0, 181, 255, 0.51);"></div>
+                    <span>Cyan: rgba(0, 181, 255, 0.51)</span>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-preview" style="background: rgba(0, 255, 102, 0.47);"></div>
+                    <span>Green: rgba(0, 255, 102, 0.47)</span>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-preview" style="background: rgba(166, 0, 255, 0.58);"></div>
+                    <span>Purple: rgba(166, 0, 255, 0.58)</span>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-preview" style="background: rgba(214, 62, 73, 0.54);"></div>
+                    <span>Red: rgba(214, 62, 73, 0.54)</span>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-preview" style="background: rgba(254, 177, 255, 0.41);"></div>
+                    <span>Pink: rgba(254, 177, 255, 0.41)</span>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-preview" style="background: rgba(255, 135, 45, 0.48);"></div>
+                    <span>Orange: rgba(255, 135, 45, 0.48)</span>
+                </div>
+            </div>
+
+            <h4>5. CSS Custom Properties Explained</h4>
+            <ul>
+                <li><strong>--diffuse:</strong> Controls the blur radius of the glow (default: 4rem)</li>
+                <li><strong>--rise:</strong> Controls vertical offset of the glow (default: 0rem)</li>
+                <li><strong>--glow:</strong> Sets the glow color and opacity (default: rgba(255, 255, 255, 0.8))</li>
+                <li><strong>--hover-glow:</strong> Sets the hover state glow color (default: white)</li>
+                <li><strong>--dim:</strong> Multiplier for glow intensity (default: 1)</li>
+            </ul>
+
+            <h4>6. Performance Optimization</h4>
+            <p>The implementation includes:</p>
+            <ul>
+                <li><code>will-change: filter</code> for GPU acceleration</li>
+                <li><code>transform: translateZ(0)</code> for hardware acceleration</li>
+                <li>Smooth transitions with cubic-bezier easing</li>
+                <li>Efficient drop-shadow filters</li>
+            </ul>
+        </div>
+
+        <!-- Advanced Examples -->
+        <div class="demo-section">
+            <h2>Advanced Glow Variations</h2>
+            <div class="product-grid">
+                <!-- Neon Effect -->
+                <div class="product-card">
+                    <div class="product-image-container">
+                        <img src="https://via.placeholder.com/300x200/00ffff/ffffff?text=Neon+Effect" 
+                             alt="Neon Effect" 
+                             class="product-image neon glow-cyan"
+                             style="--diffuse: 0.5rem; --glow: white; --hover-glow: #00ffff;">
+                    </div>
+                    <h3 class="product-title">Neon Effect</h3>
+                    <p class="product-description">Intense neon glow with multiple drop shadows.</p>
+                </div>
+
+                <!-- Glare Effect -->
+                <div class="product-card">
+                    <div class="product-image-container">
+                        <img src="https://via.placeholder.com/300x200/ffff00/ffffff?text=Glare+Effect" 
+                             alt="Glare Effect" 
+                             class="product-image glare glow-orange"
+                             style="--diffuse: 4rem; --glow: rgba(255, 255, 0, 0.6); --hover-glow: rgba(255, 255, 0, 0.9);">
+                    </div>
+                    <h3 class="product-title">Glare Effect</h3>
+                    <p class="product-description">Multiple layered glow for dramatic effect.</p>
+                </div>
+
+                <!-- Custom Positioning -->
+                <div class="product-card">
+                    <div class="product-image-container">
+                        <img src="https://via.placeholder.com/300x200/ff00ff/ffffff?text=Custom+Position" 
+                             alt="Custom Position" 
+                             class="product-image glow glow-purple"
+                             style="--diffuse: 3rem; --rise: -1rem; --glow: rgba(255, 0, 255, 0.5); --hover-glow: rgba(255, 0, 255, 0.8);">
+                    </div>
+                    <h3 class="product-title">Custom Positioning</h3>
+                    <p class="product-description">Glow positioned above the image with custom intensity.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
