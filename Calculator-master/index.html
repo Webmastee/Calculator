@@ -4,63 +4,172 @@
 <head>
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Calculator</title>
-  <meta name="description" content="Simple Calculator With Dark Mode." />
+  <title>CyberForgeX - Gaming Systems</title>
+  <meta name="description" content="Premium Gaming Systems and Custom Builds" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="icon" type="image/x-icon" href="assets/calculator.ico">
-  <link rel="stylesheet" href="styles/dark.css" id="theme" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Swiper CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="styles/main.css" />
 </head>
 
 <body>
   <div class="wrapper">
-    <div class="container">
-      <div class="header-container">
-        <!-- This heading also notifies about the theme change.-->
-        <h1 id="toast">Calculator</h1>
-        <div class="top-buttons">
-          <a href="https://github.com/zxcodes/JavaScript-Calculator">
-            <img src="assets/GitHubLight.svg" alt="Sun Icon" height="22.5" width="22.5" id="github-icon">
-          </a>
-          <button type="button" onclick="changeTheme()" class="theme-button">
-            <img src="assets/SunIcon.svg" alt="Theme Icon" height="19" width="19" id="theme-icon">
-          </button>
+    <header class="header">
+      <div class="container">
+        <div class="header-content">
+          <h1 class="logo">CyberForgeX</h1>
+          <nav class="nav">
+            <a href="#home">Home</a>
+            <a href="#systems">Systems</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+          </nav>
         </div>
       </div>
-      <div class="first-row">
-        <input type="text" name="result" id="result" placeholder="Result" readonly />
-        <input type="button" value="C" onclick="result.value=''" id="clear-button" />
-      </div>
-      <div class="second-row">
-        <input type="button" value="1" onclick="liveScreen(1)" />
-        <input type="button" value="2" onclick="liveScreen(2)" />
-        <input type="button" value="3" onclick="liveScreen(3)" />
-        <input type="button" value="+" onclick="liveScreen('+')" />
-      </div>
-      <div class="third-row">
-        <input type="button" value="4" onclick=" liveScreen(4)" />
-        <input type="button" value="5" onclick=" liveScreen(5)" />
-        <input type="button" value="6" onclick=" liveScreen(6)" />
-        <input type="button" value="-" onclick="liveScreen('-')" />
-      </div>
-      <div class="fourth-row">
-        <input type="button" value="7" onclick="liveScreen(7)" />
-        <input type="button" value="8" onclick="liveScreen(8)" />
-        <input type="button" value="9" onclick=" liveScreen(9)" />
-        <input type="button" value="x" onclick="liveScreen('*')" />
-      </div>
-      <div class="fifth-row">
-        <input type="button" value="/" onclick="liveScreen('/')" />
-        <input type="button" value="0" onclick="liveScreen(0)" />
-        <input type="button" value="." onclick="liveScreen('.')" />
-        <input type="button" value="=" onclick="calculate(result.value)" />
-      </div>
-    </div>
+    </header>
+
+    <main>
+      <!-- Hero Section -->
+      <section class="hero">
+        <div class="container">
+          <div class="hero-content">
+            <h2>Premium Gaming Systems</h2>
+            <p>Custom-built gaming rigs designed for maximum performance and style</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Systems Showcase Section -->
+      <section class="systems-showcase" id="systems">
+        <div class="container">
+          <div class="section-header">
+            <h2>Our Gaming Systems</h2>
+            <p>Choose from our premium selection of custom gaming builds</p>
+          </div>
+
+          <div class="systems-container">
+            <!-- Swiper Slider -->
+            <div class="swiper systems-swiper">
+              <div class="swiper-wrapper">
+                <div class="swiper-slide" data-system="phantom">
+                  <div class="system-card">
+                    <div class="system-image">
+                      <img src="https://images.unsplash.com/photo-1547082299-de196ea013d6?w=400&h=300&fit=crop" alt="Phantom Gaming System">
+                    </div>
+                    <div class="system-info">
+                      <h3>Phantom</h3>
+                      <p>Ultimate Performance</p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="swiper-slide" data-system="shadow">
+                  <div class="system-card">
+                    <div class="system-image">
+                      <img src="https://images.unsplash.com/photo-1593640408182-31c70c8268f7?w=400&h=300&fit=crop" alt="Shadow Gaming System">
+                    </div>
+                    <div class="system-info">
+                      <h3>Shadow</h3>
+                      <p>Stealth Performance</p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="swiper-slide" data-system="nova">
+                  <div class="system-card">
+                    <div class="system-image">
+                      <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop" alt="Nova Gaming System">
+                    </div>
+                    <div class="system-info">
+                      <h3>Nova</h3>
+                      <p>Explosive Power</p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="swiper-slide" data-system="vortex">
+                  <div class="system-card">
+                    <div class="system-image">
+                      <img src="https://images.unsplash.com/photo-1593642632823-8f785ba67e45?w=400&h=300&fit=crop" alt="Vortex Gaming System">
+                    </div>
+                    <div class="system-info">
+                      <h3>Vortex</h3>
+                      <p>Maximum Overdrive</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Navigation -->
+              <div class="swiper-button-next"></div>
+              <div class="swiper-button-prev"></div>
+              
+              <!-- Pagination -->
+              <div class="swiper-pagination"></div>
+            </div>
+
+            <!-- Product Details Panel -->
+            <div class="product-details">
+              <div class="details-content">
+                <div class="system-header">
+                  <h3 id="system-name">Phantom</h3>
+                  <p id="system-tagline">Ultimate Performance</p>
+                </div>
+                
+                <div class="specs-grid">
+                  <div class="spec-item">
+                    <h4>Processor</h4>
+                    <p id="processor">Intel Core i9-14900K</p>
+                  </div>
+                  <div class="spec-item">
+                    <h4>Graphics</h4>
+                    <p id="graphics">NVIDIA RTX 4090</p>
+                  </div>
+                  <div class="spec-item">
+                    <h4>Memory</h4>
+                    <p id="memory">64GB DDR5-6000</p>
+                  </div>
+                  <div class="spec-item">
+                    <h4>Storage</h4>
+                    <p id="storage">2TB NVMe SSD</p>
+                  </div>
+                  <div class="spec-item">
+                    <h4>Cooling</h4>
+                    <p id="cooling">Custom Liquid Cooling</p>
+                  </div>
+                  <div class="spec-item">
+                    <h4>Power</h4>
+                    <p id="power">1200W Platinum</p>
+                  </div>
+                </div>
+                
+                <div class="price-section">
+                  <div class="price">
+                    <span class="currency">$</span>
+                    <span id="price">4,999</span>
+                  </div>
+                  <button class="cta-button">Configure Now</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
   </div>
-  <script src="scripts/script.js">
-  </script>
+
+  <!-- Swiper JS -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  
+  <!-- Custom JS -->
+  <script src="scripts/main.js"></script>
 </body>
 
 </html>
