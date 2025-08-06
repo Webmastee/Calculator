@@ -1,0 +1,275 @@
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<script>
+// Product Data Structure
+const productData = [
+    {
+        id: 'cyberforge-core',
+        name: 'CyberForge Core',
+        series: 'Core Series',
+        currentPrice: '$1,999',
+        originalPrice: '$2,299',
+        image: 'https://images.unsplash.com/photo-1587831990711-23ca6441447b?w=400&h=300&fit=crop',
+        description: 'Perfect for gaming enthusiasts who want high performance without breaking the bank. Features powerful components optimized for 1080p and 1440p gaming.',
+        specs: {
+            'CPU': 'Intel Core i7-13700KF',
+            'GPU': 'RTX 4070 Super',
+            'RAM': '32GB DDR5 5600MHz',
+            'Storage': '1TB NVMe SSD',
+            'Motherboard': 'Z790 Chipset',
+            'PSU': '850W Gold Certified',
+            'Cooling': 'AIO 240mm Liquid Cooler',
+            'Case': 'Mid-Tower RGB'
+        },
+        performance: [
+            { game: 'Cyberpunk 2077', fps: '95', label: 'AVG FPS' },
+            { game: 'Call of Duty', fps: '165', label: 'AVG FPS' },
+            { game: 'Fortnite', fps: '180', label: 'AVG FPS' },
+            { game: 'Apex Legends', fps: '155', label: 'AVG FPS' }
+        ]
+    },
+    {
+        id: 'cyberforge-pro',
+        name: 'CyberForge Pro',
+        series: 'Pro Series',
+        currentPrice: '$2,799',
+        originalPrice: '$3,199',
+        image: 'https://images.unsplash.com/photo-1593640408182-31c70c8268f5?w=400&h=300&fit=crop',
+        description: 'Built for serious gamers and content creators. Delivers exceptional performance at 1440p and solid 4K gaming with advanced features.',
+        specs: {
+            'CPU': 'Intel Core i9-13900KF',
+            'GPU': 'RTX 4080 Super',
+            'RAM': '32GB DDR5 6000MHz',
+            'Storage': '2TB NVMe SSD',
+            'Motherboard': 'Z790 Premium',
+            'PSU': '1000W Platinum',
+            'Cooling': 'AIO 360mm Liquid Cooler',
+            'Case': 'Full-Tower RGB Tempered Glass'
+        },
+        performance: [
+            { game: 'Cyberpunk 2077', fps: '125', label: 'AVG FPS' },
+            { game: 'Call of Duty', fps: '190', label: 'AVG FPS' },
+            { game: 'Fortnite', fps: '220', label: 'AVG FPS' },
+            { game: 'Apex Legends', fps: '185', label: 'AVG FPS' }
+        ]
+    },
+    {
+        id: 'cyberforge-elite',
+        name: 'CyberForge Elite',
+        series: 'Elite Series',
+        currentPrice: '$3,999',
+        originalPrice: '$4,599',
+        image: 'https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?w=400&h=300&fit=crop',
+        description: 'The ultimate gaming machine for enthusiasts who demand the absolute best. Uncompromising performance for 4K gaming and professional workloads.',
+        specs: {
+            'CPU': 'Intel Core i9-14900KS',
+            'GPU': 'RTX 4090',
+            'RAM': '64GB DDR5 6400MHz',
+            'Storage': '4TB NVMe SSD',
+            'Motherboard': 'Z790 Extreme',
+            'PSU': '1200W Titanium',
+            'Cooling': 'Custom Loop Water Cooling',
+            'Case': 'Premium Full-Tower'
+        },
+        performance: [
+            { game: 'Cyberpunk 2077', fps: '165', label: 'AVG FPS' },
+            { game: 'Call of Duty', fps: '240', label: 'AVG FPS' },
+            { game: 'Fortnite', fps: '280', label: 'AVG FPS' },
+            { game: 'Apex Legends', fps: '220', label: 'AVG FPS' }
+        ]
+    },
+    {
+        id: 'cyberforge-ultimate',
+        name: 'CyberForge Ultimate',
+        series: 'Ultimate Series',
+        currentPrice: '$5,499',
+        originalPrice: '$6,199',
+        image: 'https://images.unsplash.com/photo-1518435338014-5c1b9b8e9c4c?w=400&h=300&fit=crop',
+        description: 'The pinnacle of gaming technology. Built for professionals, streamers, and enthusiasts who need maximum performance for any task.',
+        specs: {
+            'CPU': 'Intel Core i9-14900KS',
+            'GPU': 'RTX 4090 Ti (Dual GPU)',
+            'RAM': '128GB DDR5 6800MHz',
+            'Storage': '8TB NVMe SSD',
+            'Motherboard': 'Z790 Godlike',
+            'PSU': '1600W Titanium',
+            'Cooling': 'Custom Hardline Loop',
+            'Case': 'Show Case Premium'
+        },
+        performance: [
+            { game: 'Cyberpunk 2077', fps: '200', label: 'AVG FPS' },
+            { game: 'Call of Duty', fps: '300', label: 'AVG FPS' },
+            { game: 'Fortnite', fps: '350', label: 'AVG FPS' },
+            { game: 'Apex Legends', fps: '280', label: 'AVG FPS' }
+        ]
+    }
+];
+
+// Initialize Swiper
+const swiper = new Swiper('.product-swiper', {
+    slidesPerView: 1,
+    spaceBetween: 30,
+    centeredSlides: true,
+    loop: true,
+    autoplay: {
+        delay: 5000,
+        disableOnInteraction: false,
+    },
+    navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+    },
+    pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+    },
+    breakpoints: {
+        640: {
+            slidesPerView: 1.5,
+            spaceBetween: 20,
+        },
+        768: {
+            slidesPerView: 2,
+            spaceBetween: 30,
+        },
+        1024: {
+            slidesPerView: 3,
+            spaceBetween: 40,
+        }
+    }
+});
+
+// Generate slides
+function generateSlides() {
+    const swiperWrapper = document.querySelector('.swiper-wrapper');
+    if (!swiperWrapper) return;
+    
+    swiperWrapper.innerHTML = '';
+
+    productData.forEach((product, index) => {
+        const slide = document.createElement('div');
+        slide.className = 'swiper-slide';
+        slide.setAttribute('data-product-id', product.id);
+        
+        slide.innerHTML = `
+            <div class="product-card">
+                <img src="${product.image}" alt="${product.name}" class="product-image">
+                <div>
+                    <div class="product-series">${product.series}</div>
+                    <h3 class="product-name">${product.name}</h3>
+                    <div class="product-price">
+                        ${product.currentPrice}
+                        <span class="original">${product.originalPrice}</span>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        swiperWrapper.appendChild(slide);
+    });
+}
+
+// Update product details
+function updateProductDetails(productId) {
+    const product = productData.find(p => p.id === productId);
+    if (!product) return;
+
+    // Update main product info
+    const productName = document.getElementById('product-name');
+    const productSeries = document.getElementById('product-series');
+    const currentPrice = document.getElementById('current-price');
+    const originalPrice = document.getElementById('original-price');
+    const productDescription = document.getElementById('product-description');
+
+    if (productName) productName.textContent = product.name;
+    if (productSeries) productSeries.textContent = product.series;
+    if (currentPrice) currentPrice.textContent = product.currentPrice;
+    if (originalPrice) originalPrice.textContent = product.originalPrice;
+    if (productDescription) productDescription.textContent = product.description;
+
+    // Update specifications
+    const specGrid = document.getElementById('spec-grid');
+    if (specGrid) {
+        specGrid.innerHTML = '';
+        
+        Object.entries(product.specs).forEach(([key, value]) => {
+            const specItem = document.createElement('div');
+            specItem.className = 'spec-item';
+            specItem.innerHTML = `
+                <span class="spec-label">${key}</span>
+                <span class="spec-value">${value}</span>
+            `;
+            specGrid.appendChild(specItem);
+        });
+    }
+
+    // Update performance data
+    const performanceGrid = document.getElementById('performance-grid');
+    if (performanceGrid) {
+        performanceGrid.innerHTML = '';
+        
+        product.performance.forEach(perf => {
+            const perfItem = document.createElement('div');
+            perfItem.className = 'performance-item';
+            perfItem.innerHTML = `
+                <div class="performance-game">${perf.game}</div>
+                <div class="performance-fps">${perf.fps}</div>
+                <div class="performance-label">${perf.label}</div>
+            `;
+            performanceGrid.appendChild(perfItem);
+        });
+    }
+}
+
+// Handle slide clicks
+function handleSlideClick(event) {
+    const slide = event.currentTarget;
+    const productId = slide.getAttribute('data-product-id');
+    
+    if (productId) {
+        updateProductDetails(productId);
+        
+        // Find the index of clicked slide and go to it
+        const slides = document.querySelectorAll('.swiper-slide');
+        const slideIndex = Array.from(slides).indexOf(slide);
+        swiper.slideToLoop(slideIndex);
+    }
+}
+
+// Handle swiper slide change
+swiper.on('slideChange', function () {
+    const activeSlide = document.querySelector('.swiper-slide-active');
+    if (activeSlide) {
+        const productId = activeSlide.getAttribute('data-product-id');
+        if (productId) {
+            updateProductDetails(productId);
+        }
+    }
+});
+
+// Initialize everything
+document.addEventListener('DOMContentLoaded', function() {
+    // Wait a bit for Webflow to load
+    setTimeout(() => {
+        generateSlides();
+        
+        // Set initial product (first one)
+        updateProductDetails(productData[0].id);
+        
+        // Add click listeners to slides
+        setTimeout(() => {
+            const slides = document.querySelectorAll('.swiper-slide');
+            slides.forEach(slide => {
+                slide.addEventListener('click', handleSlideClick);
+            });
+        }, 100);
+    }, 500);
+});
+
+// Handle window resize
+window.addEventListener('resize', function() {
+    if (swiper) {
+        swiper.update();
+    }
+});
+</script>
